@@ -4,7 +4,41 @@ document.addEventListener('DOMContentLoaded', () => {
   initContactForm();
   initVolunteerForm();
   initScrollAnimations();
+  initVideoModal();
 });
+
+function initVideoModal() {
+  const playBtn = document.getElementById('play-video-btn');
+  const videoModal = document.getElementById('video-modal');
+  const closeBtn = document.getElementById('close-video-btn');
+  const videoIframe = document.getElementById('video-iframe');
+  const overlay = videoModal?.querySelector('.video-modal-overlay');
+  
+  if (!playBtn || !videoModal) return;
+  
+  const videoUrl = 'https://www.youtube.com/embed/pDLbYd5YLbw?autoplay=1';
+  
+  playBtn.addEventListener('click', () => {
+    videoIframe.src = videoUrl;
+    videoModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  });
+  
+  function closeModal() {
+    videoModal.classList.remove('active');
+    videoIframe.src = '';
+    document.body.style.overflow = '';
+  }
+  
+  closeBtn?.addEventListener('click', closeModal);
+  overlay?.addEventListener('click', closeModal);
+  
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && videoModal.classList.contains('active')) {
+      closeModal();
+    }
+  });
+}
 
 function initMobileMenu() {
   const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
